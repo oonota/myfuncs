@@ -20,25 +20,21 @@ class nmf
         int k;
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-        nmf(const Eigen::Matrix2d& x);
+        nmf(const Eigen::MatrixXd& x);
         void test(void);
 };
 
 
 int main(){
 
-    Eigen::Matrix2d A = Eigen::Matrix2d::Zero(4,5);
-    A(0,0) = 2;
-    A(1,3) = 5;
-    cout << A << endl;
+    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2,5);
     nmf a(A);
-    //a.test();
+    a.test();
+    Eigen::MatrixXd r = Eigen::MatrixXd::Constant(3,3,dist(mt));
+    cout << r << endl;
+
 
     /*
-    Eigen::Matrix2f R = Eigen::Matrix2f::Random(4,4);
-
-    cout << R << endl;
-    */
     double d = 0.0;
     for(int i=0;i<N;i++){
         //cout << mt() << endl;
@@ -46,10 +42,11 @@ int main(){
         //d = dist(mt);
         //cout << d << endl;
     }
+    */
 
     return 0;
 }
-nmf::nmf(const Eigen::Matrix2d& x)
+nmf::nmf(const Eigen::MatrixXd& x)
 {
     std::random_device rd;
     std::mt19937 mt(rd());
@@ -58,8 +55,6 @@ nmf::nmf(const Eigen::Matrix2d& x)
     this->row = x.rows();
     this->col = x.cols();
 
-  cout << this->row << endl;
-  cout << this->col << endl;
 }
 void nmf::test(void)
 {
