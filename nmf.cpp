@@ -16,6 +16,7 @@ class nmf
     Eigen::MatrixXd a;
     Eigen::MatrixXd u;
     Eigen::MatrixXd v;
+    Eigen::VectorXd err;
     int row, col;
     int k;
     int processed_iter;
@@ -30,6 +31,7 @@ class nmf
     Eigen::MatrixXd get_u(void); 
     Eigen::MatrixXd get_v(void); 
     Eigen::MatrixXd get_uv(void); 
+    Eigen::VectorXd get_err(void);
     void test(void);
 };
 
@@ -133,19 +135,21 @@ void nmf::init_uv(void)
 void nmf::fit(int k, int max_iter)
 {
     int i;
-    double err = 0.0;
+    double error = 0.0;
     Eigen::MatrixXd un;
     Eigen::MatrixXd ud;
     Eigen::MatrixXd vn;
     Eigen::MatrixXd vd;
+    this->err = Eigen::VectorXd::Zero(max_iter);
     set_k(k);
     init_uv();
 
     for (i = 0; i < max_iter; i++)
     {
 
-        err = sqerr();
-        if (err == 0.0){
+        error = sqerr();
+        this->err(i) = error;
+        if (error == 0.0){
             break;
         }
         // update rules
@@ -186,4 +190,8 @@ Eigen::MatrixXd nmf::get_u(void)
 Eigen::MatrixXd nmf::get_v(void)
 {
  return this->v;
+}
+Eigen::VectorXd nmf::get_err(void)
+{
+    return this->err;
 }
