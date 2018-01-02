@@ -8,12 +8,12 @@
 #include "Eigen/Core"
 //using namespace std;
 
-#define N 10
+#define N 10 
 
 class nmf
 {
   private:
-    Eigen::MatrixXd x;
+    Eigen::MatrixXd a;
     Eigen::MatrixXd u;
     Eigen::MatrixXd v;
     int row, col;
@@ -22,11 +22,14 @@ class nmf
 
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    nmf(const Eigen::MatrixXd &x);
+    nmf(const Eigen::MatrixXd &a);
     void fit(int k, int max_iter);
     void init_uv(void);
     void set_k(int k);
     double sqerr(void);
+    Eigen::MatrixXd get_u(void); 
+    Eigen::MatrixXd get_v(void); 
+    Eigen::MatrixXd get_uv(void); 
     void test(void);
 };
 
@@ -36,21 +39,42 @@ int main()
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<double> dist(0.0, 1.0);
+    std::uniform_int_distribution<int> d(0,10);
 
-    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 5);
+    Eigen::MatrixXd A = Eigen::MatrixXd::Ones(N, N);
+    Eigen::MatrixXd B = Eigen::MatrixXd::Ones(N, N);
     Eigen::MatrixXd r = Eigen::MatrixXd::Zero(4, 3);
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < N; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < N; j++)
         {
-            r(i, j) = dist(mt);
+            A(i, j) = (double)d(mt);
         }
     }
-    nmf a(r);
+    nmf a(A);
+    a.fit(7,1000);
 
-    std::cout << r << std::endl;
+    std::cout << A << std::endl;
+    std::cout << a.get_uv() << std::endl;
+    std::cout << a.sqerr() << std::endl;
+
+    /*
     a.fit(2, 100);
     a.test();
+    A(1,1) = 1.0;
+    A(1,3) = 4.0;
+    A(4,4) = 2.0;
+    A(0,0) = 3.0;
+    A(4,0) = 9.0;
+    B(1,1) = 0.5;
+    B(1,3) = 2.0;
+    B(4,4) = 1.0;
+    */
+
+
+
+        //vd = this->u * this->v * this->v.transpose();
+        //this->u = this->u.cwiseProduct(vn.cwiseQuotient(vd));
 
     /*
     double d = 0.0;
@@ -64,17 +88,17 @@ int main()
 
     return 0;
 }
-nmf::nmf(const Eigen::MatrixXd &x)
+nmf::nmf(const Eigen::MatrixXd &a)
 {
-    this->x = x;
-    this->row = x.rows();
-    this->col = x.cols();
+    this->a = a;
+    this->row = a.rows();
+    this->col = a.cols();
 }
 void nmf::test(void)
 {
     std::cout << this->row << std::endl;
     std::cout << this->col << std::endl;
-    std::cout << this->x << std::endl;
+    std::cout << this->a << std::endl;
     std::cout << this->u << std::endl;
     std::cout << this->v << std::endl;
 }
@@ -108,21 +132,34 @@ void nmf::init_uv(void)
 }
 void nmf::fit(int k, int max_iter)
 {
+    int i;
     double err = 0.0;
+    Eigen::MatrixXd un;
+    Eigen::MatrixXd ud;
+    Eigen::MatrixXd vn;
+    Eigen::MatrixXd vd;
     set_k(k);
     init_uv();
 
-    for (int i = 0; i < max_iter; i++)
+    for (i = 0; i < max_iter; i++)
     {
 
         err = sqerr();
-        if (err == 0.0)
-        {
-            this->processed_iter = i;
+        if (err == 0.0){
             break;
         }
         // update rules
+        vn = this->u.transpose()*this->a;
+        vd = this->u.transpose()*this->u*this->v;
+        this->v = this->v.cwiseProduct(vn.cwiseQuotient(vd));
+
+        un = this->a * this->v.transpose();
+        ud = this->u * this->v * this->v.transpose();
+        this->u = this->u.cwiseProduct(un.cwiseQuotient(ud));
+
+
     }
+        this->processed_iter = i;
 }
 void nmf::set_k(int k)
 {
@@ -134,7 +171,19 @@ double nmf::sqerr(void)
     Eigen::MatrixXd uv;
 
     uv = this->u * this->v;
-    hoge = x - uv;
-    hoge.prod();
+    hoge = this->a - uv;
+    hoge = hoge.cwiseProduct(hoge);
     return hoge.sum();
+}
+Eigen::MatrixXd nmf::get_uv(void)
+{
+ return (this->u*this->v);
+}
+Eigen::MatrixXd nmf::get_u(void)
+{
+ return this->u;
+}
+Eigen::MatrixXd nmf::get_v(void)
+{
+ return this->v;
 }
