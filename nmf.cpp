@@ -32,6 +32,7 @@ class nmf
     Eigen::MatrixXd get_v(void); 
     Eigen::MatrixXd get_uv(void); 
     Eigen::VectorXd get_err(void);
+    int get_iterend(void);
     void test(void);
 };
 
@@ -47,6 +48,8 @@ int main()
     Eigen::MatrixXd B = Eigen::MatrixXd::Ones(N, N);
     Eigen::MatrixXd r = Eigen::MatrixXd::Zero(4, 3);
     Eigen::MatrixXd u;
+    Eigen::VectorXd err;
+    int processed;;
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
@@ -57,11 +60,17 @@ int main()
     nmf a(A);
     a.fit(7,1000);
 
-    std::cout << A << std::endl;
-    std::cout << a.get_uv() << std::endl;
-    std::cout << a.sqerr() << std::endl;
+    //std::cout << A << std::endl;
+    //std::cout << a.get_uv() << std::endl;
+    //std::cout << a.sqerr() << std::endl;
     u = a.get_u();
-    std::cout << u(0,0) << std::endl;
+    //std::cout << u(0,0) << std::endl;
+    err = a.get_err();
+    processed = a.get_iterend();
+    for(int i=0;i<processed;i++){
+std::cout << i << "," << err(i) << std::endl;
+    }
+    
 
     /*
     a.fit(2, 100);
@@ -197,4 +206,8 @@ Eigen::MatrixXd nmf::get_v(void)
 Eigen::VectorXd nmf::get_err(void)
 {
     return this->err;
+}
+int nmf::get_iterend(void)
+{
+    return this->processed_iter;
 }
