@@ -46,6 +46,7 @@ int main()
     Eigen::MatrixXd A = Eigen::MatrixXd::Ones(N, N);
     Eigen::MatrixXd B = Eigen::MatrixXd::Ones(N, N);
     Eigen::MatrixXd r = Eigen::MatrixXd::Zero(4, 3);
+    Eigen::MatrixXd u;
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
@@ -59,6 +60,8 @@ int main()
     std::cout << A << std::endl;
     std::cout << a.get_uv() << std::endl;
     std::cout << a.sqerr() << std::endl;
+    u = a.get_u();
+    std::cout << u(0,0) << std::endl;
 
     /*
     a.fit(2, 100);
