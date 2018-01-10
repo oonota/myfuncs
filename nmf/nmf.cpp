@@ -74,6 +74,8 @@ void nmf::fit(int k, int max_iter)
         ud = this->u * this->v * this->v.transpose();
         this->u = this->u.cwiseProduct(un.cwiseQuotient(ud));
 
+        //normalize u
+        normalize();
 
     }
         this->processed_iter = i;
@@ -114,7 +116,12 @@ int nmf::get_iterend(void)
 }
 void nmf::normalize(void)
 {
+Eigen::MatrixXd sq;
+Eigen::RowVectorXd norm;
+Eigen::MatrixXd x = Eigen::MatrixXd::Zero(this->row,this->k);
 
-
-
+sq = this->u.cwiseProduct(this->u);
+norm = sq.colwise().sum().array().sqrt();
+x.rowwise() = norm;
+this->u = this->u.cwiseQuotient(x);
 }
