@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/Users/oono/home/c++/myfuncs/Eigen -I/Users/oono/home/c++/myfuncs/nmf 
 

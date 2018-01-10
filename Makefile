@@ -111,44 +111,71 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named nmf
+# Target rules for targets named main
 
 # Build rule for target.
-nmf: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 nmf
-.PHONY : nmf
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-nmf/fast:
-	$(MAKE) -f CMakeFiles/nmf.dir/build.make CMakeFiles/nmf.dir/build
-.PHONY : nmf/fast
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
-nmf.o: nmf.cpp.o
+main.o: main.cpp.o
 
-.PHONY : nmf.o
+.PHONY : main.o
 
 # target to build an object file
-nmf.cpp.o:
-	$(MAKE) -f CMakeFiles/nmf.dir/build.make CMakeFiles/nmf.dir/nmf.cpp.o
-.PHONY : nmf.cpp.o
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-nmf.i: nmf.cpp.i
+main.i: main.cpp.i
 
-.PHONY : nmf.i
+.PHONY : main.i
 
 # target to preprocess a source file
-nmf.cpp.i:
-	$(MAKE) -f CMakeFiles/nmf.dir/build.make CMakeFiles/nmf.dir/nmf.cpp.i
-.PHONY : nmf.cpp.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-nmf.s: nmf.cpp.s
+main.s: main.cpp.s
 
-.PHONY : nmf.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-nmf.cpp.s:
-	$(MAKE) -f CMakeFiles/nmf.dir/build.make CMakeFiles/nmf.dir/nmf.cpp.s
-.PHONY : nmf.cpp.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
+.PHONY : main.cpp.s
+
+nmf/nmf.o: nmf/nmf.cpp.o
+
+.PHONY : nmf/nmf.o
+
+# target to build an object file
+nmf/nmf.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/nmf/nmf.cpp.o
+.PHONY : nmf/nmf.cpp.o
+
+nmf/nmf.i: nmf/nmf.cpp.i
+
+.PHONY : nmf/nmf.i
+
+# target to preprocess a source file
+nmf/nmf.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/nmf/nmf.cpp.i
+.PHONY : nmf/nmf.cpp.i
+
+nmf/nmf.s: nmf/nmf.cpp.s
+
+.PHONY : nmf/nmf.s
+
+# target to generate assembly for a file
+nmf/nmf.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/nmf/nmf.cpp.s
+.PHONY : nmf/nmf.cpp.s
 
 # Help Target
 help:
@@ -158,10 +185,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... nmf"
-	@echo "... nmf.o"
-	@echo "... nmf.i"
-	@echo "... nmf.s"
+	@echo "... main"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... nmf/nmf.o"
+	@echo "... nmf/nmf.i"
+	@echo "... nmf/nmf.s"
 .PHONY : help
 
 
