@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -18,8 +18,6 @@ nmf.h
 
 /Users/oono/home/c++/myfuncs/nmf/nmf.cpp
 iostream
--
-random
 -
 Core
 /Users/oono/home/c++/myfuncs/nmf/Core
