@@ -2,12 +2,14 @@
 #include "Core" //Eigen Library
 #include "nmf.h"
 
+/*
 nmf::nmf(const Eigen::MatrixXd &a)
 {
     this->a = a;
     this->row = a.rows();
     this->col = a.cols();
 }
+*/
 void nmf::init_uv(void)
 {
     int row, col;
@@ -18,7 +20,8 @@ void nmf::init_uv(void)
     this->v = Eigen::MatrixXd::Random(k, col).cwiseAbs();
 
 }
-Decom nmf::fit(int k, int max_iter)
+
+Decom nmf::fit(const Eigen::MatrixXd &a,int k, int max_iter)
 {
     int i;
     double error = 0.0;
@@ -27,6 +30,10 @@ Decom nmf::fit(int k, int max_iter)
     Eigen::MatrixXd vn;
     Eigen::MatrixXd vd;
     Decom result;
+
+    this->a = a;
+    this->row = a.rows();
+    this->col = a.cols();
     this->err = Eigen::VectorXd::Zero(max_iter);
     set_k(k);
     init_uv();

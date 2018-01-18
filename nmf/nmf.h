@@ -21,8 +21,8 @@ class nmf
 
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    nmf(const Eigen::MatrixXd &a);
-    Decom fit(int k, int max_iter);
+    //nmf(const Eigen::MatrixXd &a);
+    Decom fit(const Eigen::MatrixXd &a,int k, int max_iter);
     void init_uv(void);
     void set_k(int k);
     double sqerr(void);
