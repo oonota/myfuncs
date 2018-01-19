@@ -7,14 +7,14 @@
 #IncludeRegexTransform: 
 
 /Users/oono/home/c++/myfuncs/main.cpp
-iostream
--
-random
--
 Core
 /Users/oono/home/c++/myfuncs/Core
 nmf.h
 /Users/oono/home/c++/myfuncs/nmf.h
+iostream
+-
+random
+-
 
 /Users/oono/home/c++/myfuncs/nmf/nmf.cpp
 iostream
