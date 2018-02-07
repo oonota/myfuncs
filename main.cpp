@@ -1,4 +1,5 @@
-#include "Core" //Eigen Library
+//#include "Core" //Eigen Library
+#include "Eigen/Core" //Eigen Library
 #include "nmf.h"
 #include <iostream>
 #include <random>
