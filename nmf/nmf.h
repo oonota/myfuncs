@@ -1,12 +1,7 @@
 #ifndef NMF_H
 #define NMF_H
-typedef struct {
-    Eigen::MatrixXd u;
-    Eigen::MatrixXd v;
-    Eigen::VectorXd err;
-    int count;
-} Decom;
 
+#include "decomposition_result.h"
 
 class nmf
 {
@@ -18,10 +13,11 @@ class nmf
     int row, col;
     int k;
     int processed_iter;
+		int hoge;
 
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    //nmf(const Eigen::MatrixXd &a);
+    nmf();
     Decom fit(const Eigen::MatrixXd &a,int k, int max_iter);
     void init_uv(void);
     void set_k(int k);

@@ -1,6 +1,7 @@
 //#include "Core" //Eigen Library
 #include "Eigen/Core" //Eigen Library
 #include "nmf.h"
+#include "decomposition_result.h"
 #include <iostream>
 #include <random>
 // using namespace std;

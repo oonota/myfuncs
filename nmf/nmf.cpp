@@ -1,15 +1,13 @@
 #include <iostream>
-#include "Core" //Eigen Library
+#include "Eigen/Core" //Eigen Library
+//#include "Core" //Eigen Library
 #include "nmf.h"
+#include "decomposition_result.h"
 
-/*
-nmf::nmf(const Eigen::MatrixXd &a)
+nmf::nmf()
 {
-    this->a = a;
-    this->row = a.rows();
-    this->col = a.cols();
 }
-*/
+
 void nmf::init_uv(void)
 {
     int row, col;

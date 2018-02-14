@@ -1,14 +1,21 @@
 CXX = clang++
-CXXFLAGS = -I./nmf -I./Eigen
+CFLAGS = -I./nmf -I.
 TARGET = main
 
-main: 	main.o\
-	nmf/nmf.o
-	$(CXX) -o main main.o nmf/nmf.o
-nmf.o:	nmf/nmf.cpp nmf/nmf.h
-	$(CXX) -c nmf/nmf.cpp $(CXXFLAGS)   
-main.o: main.cpp
-	$(CXX) -c main.cpp $(CXXFLAGS) 
+VPATH = ./nmf:./Eigen
+
+SOURCES = main.cpp\
+          nmf.cpp
+
+OBJECTS = $(subst .cpp,.o,$(SOURCES)) 
+
+
+
+%.o:%.cpp
+	$(CXX) -c $< $(CFLAGS)
+
+main:	$(OBJECTS)
+	$(CXX) -o $@ $^
 
 .PHONY:clean
 clean:
